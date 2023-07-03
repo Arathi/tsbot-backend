@@ -1,10 +1,10 @@
 export interface TShockRestApiResponse {
   status: string;
+  response: string | string[] | undefined;
   error?: string;
 }
 
 export interface TokenCreateResponse extends TShockRestApiResponse {
-  response: string;
   token: string;
 }
 
@@ -47,4 +47,12 @@ export interface ServerStatusResponse extends TShockRestApiResponse {
   serverpassword: string;
   players: Player[];
   rules: Rules;
+}
+
+export interface ServerMotdResponse extends TShockRestApiResponse {
+  motd: string[];
+}
+
+export interface ServerRulesResponse extends TShockRestApiResponse {
+  rules: string[];
 }
