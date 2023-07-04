@@ -1,24 +1,14 @@
 import { TShockService } from './tshock.service';
 import { Post, Get, Controller, Param, Body } from '@nestjs/common';
-import { ServerStatusResponse } from './api/tshock/types';
+import { ServerStatusBody } from './api/tshock/types';
 import { ResponseMessage } from './types';
 
 @Controller('server')
 export class ServerController {
   constructor(private readonly tsSvc: TShockService) {}
 
-  @Post('login')
-  async login(): Promise<ResponseMessage<boolean>> {
-    const succ = await this.tsSvc.login();
-    return {
-      code: 0,
-      message: '成功',
-      data: succ,
-    };
-  }
-
   @Get('status')
-  async status(): Promise<ResponseMessage<ServerStatusResponse>> {
+  async status(): Promise<ResponseMessage<ServerStatusBody>> {
     const body = await this.tsSvc.status();
     return {
       code: 0,
@@ -59,11 +49,11 @@ export class ServerController {
     };
   }
 
-  @Post('exec-command')
+  @Post('execute')
   async execCommand(
     @Body('command') command: string,
   ): Promise<ResponseMessage<string[]>> {
-    const results = await this.tsSvc.execCommand(command);
+    const results = await this.tsSvc.execute(command);
     return {
       code: 0,
       message: '成功',
